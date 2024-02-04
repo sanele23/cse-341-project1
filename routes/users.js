@@ -4,7 +4,7 @@ const router = express.Router();
 const usersController = require("../controllers/users");
 
 // create two routes
-router.get("/", usersController.getSingle);
+router.get("/", usersController.getAll);
 
 router.get("/:id", usersController.getSingle);
 
