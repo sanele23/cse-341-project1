@@ -1,22 +1,25 @@
 {
   "name": "cse-341-project1",
   "version": "1.0.0",
-  "description": "My first project for cse-341",
+  "description": "project1 work",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sanele23/cse-341-project1.git"
   },
-  "author": "sanele krakra",
+  "author": "Sanele Krakra",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/sanele23/cse-341-project1/issues"
   },
   "homepage": "https://github.com/sanele23/cse-341-project1#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0"
   }
 }
