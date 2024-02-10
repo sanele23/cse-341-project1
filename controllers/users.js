@@ -4,6 +4,7 @@ const mongodb = require("../data/database"); // mongodb connection
 const ObjectId = require("mongodb").ObjectId;
 
 const getAll = async (req, res) => {
+  // #swagger.tags=['Users']
   const result = await mongodb.getDatabase().db().collection("users").find();
   result.toArray().then((users) => {
     res.setHeader("Content-Type", "application/json");
@@ -12,6 +13,7 @@ const getAll = async (req, res) => {
 };
 
 const getSingle = async (req, res) => {
+  // #swagger.tags=['Users']
   const userId = new ObjectId(req.params.id);
   // constant variable that connects to the database
   const result = await mongodb
@@ -25,7 +27,84 @@ const getSingle = async (req, res) => {
   });
 };
 
+const createUser = async (req, res) => {
+  // #swagger.tags=['Users']
+  const user = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    favoriteColor: req.body.favoriteColor,
+    birthday: req.body.birthday,
+  };
+  // get id and update according to the user
+  const response = await mongodb
+    .getDatabase()
+    .db()
+    .collection("users")
+    .insertOne(user);
+
+  // response
+  if (response.acknowledge) {
+    res.status(204).send();
+  } else {
+    res
+      .status(500)
+      .json(response.error || "Some error occured while updating the user.");
+  }
+};
+
+// update
+const updateUser = async (req, res) => {
+  // #swagger.tags=['Users']
+  const userId = new ObjectId(req.params.id);
+  const user = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    favoriteColor: req.body.favoriteColor,
+    birthday: req.body.birthday,
+  };
+  // get id and update according to the user
+  const response = await mongodb
+    .getDatabase()
+    .db()
+    .collection("users")
+    .replaceOne({ _id: userId }, user);
+
+  // response
+  if (response.modifiedCount > 0) {
+    res.status(204).send();
+  } else {
+    res
+      .status(500)
+      .json(response.error || "Some error occured while updating the user.");
+  }
+};
+
+// delete
+const deleteUser = async (req, res) => {
+  // #swagger.tags=['Users']
+  const userId = new ObjectId(req.params.id);
+  const response = await mongodb
+    .getDatabase()
+    .db()
+    .collection("user")
+    .deleteUser({ _id: userId });
+
+  // response
+  if (response.deleteCount > 0) {
+    res.status(204).send();
+  } else {
+    res
+      .status(500)
+      .json(response.error || "Some error occured while updating the user.");
+  }
+};
+
 module.exports = {
   getAll,
   getSingle,
+  createUser,
+  updateUser,
+  deleteUser,
 };
